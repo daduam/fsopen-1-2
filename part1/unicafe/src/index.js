@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 
-const Header = (props) => (
-  <h1>{props.text}</h1>
+const Header = ({ text }) => (
+  <h1>{text}</h1>
 )
 
-const Button = (props) => (
-  <button onClick={props.handleClick}>{props.text}</button>
+const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick}>{text}</button>
 )
 
-const Statistic = (props) => (
-  <div>{props.text} {props.value}</div>
+const Statistic = ({ text, value }) => (
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
 )
 
 const Statistics = ({ good, neutral, bad }) => {
@@ -26,14 +29,16 @@ const Statistics = ({ good, neutral, bad }) => {
   const positive = (good / sum) * 100
 
   return (
-    <>
-      <Statistic text='good' value={good} />
-      <Statistic text='neutral' value={neutral} />
-      <Statistic text='bad' value={bad} />
-      <Statistic text='all' value={sum} />
-      <Statistic text='average' value={average} />
-      <Statistic text='postive' value={'' + positive + ' %'} />
-    </>
+    <table>
+      <tbody>
+        <Statistic text='good' value={good} />
+        <Statistic text='neutral' value={neutral} />
+        <Statistic text='bad' value={bad} />
+        <Statistic text='all' value={sum} />
+        <Statistic text='average' value={average} />
+        <Statistic text='postive' value={'' + positive + ' %'} />
+      </tbody>
+    </table>
   )
 }
 
@@ -58,6 +63,4 @@ const App = () => {
   )
 }
 
-ReactDOM.render(<App />,
-  document.getElementById('root')
-)
+ReactDOM.render(<App />, document.getElementById('root'))
