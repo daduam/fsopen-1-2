@@ -10,18 +10,33 @@ const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
 )
 
-const Statistics = (props) => (
+const DisplayCount = (props) => (
   <div>{props.text} {props.count}</div>
 )
+
+const Statistics = ({ good, neutral, bad }) => {
+  const sum = good + neutral + bad
+  const average = (good - bad) / sum
+  const positive = (good / sum) * 100
+
+  return (
+    <>
+      <DisplayCount text='good' count={good} />
+      <DisplayCount text='neutral' count={neutral} />
+      <DisplayCount text='bad' count={bad} />
+      <DisplayCount text='all' count={sum} />
+      <DisplayCount text='average' count={average} />
+      <DisplayCount text='postive' count={'' + positive + ' %'} />
+    </>
+  )
+}
 
 const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  const sum = good + neutral + bad
-  const average = (good - bad) / sum
-  const positive = (good / sum) * 100
+
 
   return (
     <div>
@@ -33,12 +48,7 @@ const App = () => {
       </div>
       <div>
         <Header text='statistics' />
-        <Statistics text='good' count={good} />
-        <Statistics text='neutral' count={neutral} />
-        <Statistics text='bad' count={bad} />
-        <Statistics text='all' count={sum} />
-        <Statistics text='average' count={average} />
-        <Statistics text='postive' count={'' + positive + ' %'} />
+        <Statistics good={good} neutral={neutral} bad={bad} />
       </div>
     </div>
   )
