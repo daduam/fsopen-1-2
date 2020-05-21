@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 
+const Anecdote = (props) => (
+  <>
+    <div>{props.anecdote}</div>
+    <div>has {props.points} votes</div>
+  </>
+)
+
 const Button = (props) => (
   <button onClick={props.handleClick}>
     {props.text}
@@ -29,15 +36,13 @@ const App = (props) => {
     <div>
       <div>
         <h1>Anecdote of the day</h1>
-        <div>{props.anecdotes[selected]}</div>
-        <div>has {points[selected]} votes</div>
+        <Anecdote anecdote={props.anecdotes[selected]} points={points[selected]} />
         <Button handleClick={() => setPoints(vote())} text='vote' />
         <Button handleClick={() => setSelected(randomNumber())} text='next anecdote' />
       </div>
       <div>
         <h1>Anecdote with most votes</h1>
-        <div>{props.anecdotes[indexMaxVotes]}</div>
-        <div>has {points[indexMaxVotes]} votes</div>
+        <Anecdote anecdote={props.anecdotes[indexMaxVotes]} points={points[indexMaxVotes]} />
       </div>
     </div>
   )
