@@ -57,15 +57,15 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter value={filterString} handleChange={handleFilterInputChange} />
+      <Filter value={filterString} onChange={handleFilterInputChange} />
 
       <h2>Add a new</h2>
       <PersonForm
         name={newName}
         number={newNumber}
-        handleNameChange={handleNameInputChange}
-        handleNumberChange={handleNumberInputChange}
-        handleClick={addPerson}
+        onNameChange={handleNameInputChange}
+        onNumberChange={handleNumberInputChange}
+        onClick={addPerson}
       />
 
       <h2>Numbers</h2>
