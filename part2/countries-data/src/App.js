@@ -6,7 +6,7 @@ import CountryList from './components/CountryList'
 
 const App = () => {
   const [countries, setCountries] = useState([])
-  const [filterString, setFilterString] = useState('Switzerland')
+  const [filterString, setFilterString] = useState('')
 
   const hook = () => {
     axios
@@ -19,7 +19,7 @@ const App = () => {
 
   useEffect(hook, [])
 
-  const countriesToShow = countries.filter(
+  let countriesToShow = countries.filter(
     (country) => country.name.toLowerCase().includes(filterString.toLowerCase())
   )
 
@@ -28,10 +28,14 @@ const App = () => {
     setFilterString(event.target.value)
   }
 
+  const handleShowClick = (event) => {
+    setFilterString(event.target.previousSibling.data)
+  }
+
   return (
     <div>
       <Filter value={filterString} onChange={handleFilterInputChange} />
-      <CountryList countries={countriesToShow} />
+      <CountryList countries={countriesToShow} onClick={handleShowClick} />
     </div>
   )
 }

@@ -18,7 +18,7 @@ const Country = ({ country }) => {
         </ul>
       </div>
       <div>
-        <img src={country.flag} width="100px" />
+        <img alt={`flag of ${country.name}`} src={country.flag} width="100px" />
       </div>
     </div>
   )

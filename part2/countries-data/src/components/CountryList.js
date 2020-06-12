@@ -2,7 +2,7 @@ import React from 'react'
 import Country from './Country'
 
 
-const CountryList = ({ countries }) => {
+const CountryList = ({ countries, onClick }) => {
   if (countries.length > 10) {
     return (
       <div>Too many matches, specify another filter</div>
@@ -17,7 +17,10 @@ const CountryList = ({ countries }) => {
     return (
       <div>
         {countries.map((country) =>
-          <div key={country.name}>{country.name}</div>
+          <div key={country.name}>
+            {country.name}
+            <button onClick={onClick}>show</button>
+          </div>
         )}
       </div>
     )
