@@ -41,9 +41,13 @@ const App = () => {
         show: true
       }
 
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNewNumber('')
+      axios
+        .post('http://localhost:3001/persons', personObject)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+          setNewName('')
+          setNewNumber('')
+        })
     }
     else {
       alert(`${newName} is already added to the phonebook`)
@@ -58,8 +62,8 @@ const App = () => {
   const personsToShow = showAll
     ? persons
     : persons.filter(
-        person => person.name.toLowerCase().includes(filterString)
-      )
+      person => person.name.toLowerCase().includes(filterString)
+    )
 
   return (
     <div>
