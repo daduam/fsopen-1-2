@@ -1,15 +1,17 @@
 import React from 'react'
 
 
-const Person = ({ person }) => (
-  <li>{person.name} {person.number}</li>
-)
-
-const Persons = ({ persons }) => (
+const Persons = ({ persons, deletePersonOf }) => (
   <ul>
-    {persons.map(person =>
-      <Person person={person} key={person.name} />
-    )}
+    {persons.map(person => {
+      return (
+        <li key={person.name}>
+          {person.name} {person.number}
+          &nbsp;
+          <button onClick={() => deletePersonOf(person.id)}>delete</button>
+        </li>
+      )
+    })}
   </ul>
 )
 

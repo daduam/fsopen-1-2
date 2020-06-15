@@ -58,6 +58,19 @@ const App = () => {
     setShowAll(filterString.length === 0 ? true : false)
   }
 
+  const deletePersonOf = (id) => {
+    const [person] = persons.filter(p => p.id === id)
+    if (window.confirm(`Delete ${person.name} ?`)) {
+      personService
+        .deletePerson(id)
+        .then(statusCode => {
+          if (statusCode === 200) {
+            setPersons(persons.filter(p => p !== person))
+          }
+        })
+    }
+  }
+
   const personsToShow = showAll
     ? persons
     : persons.filter(
@@ -79,7 +92,7 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons persons={personsToShow} />
+      <Persons persons={personsToShow} deletePersonOf={deletePersonOf} />
     </div>
   )
 }
