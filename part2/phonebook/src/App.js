@@ -33,7 +33,9 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
-    if (persons.find(person => person.name === newName) === undefined) {
+    const person = persons.find(p => p.name === newName)
+
+    if (person === undefined) {
       const personObject = {
         name: newName,
         number: newNumber,
@@ -48,8 +50,20 @@ const App = () => {
           setNewNumber('')
         })
     }
+    else if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one`)) {
+      const id = person.id
+      
+      personService
+        .update(id, { ...person, number: newNumber })
+        .then(returnedPerson => {
+          setPersons(persons.filter(p => p.id !== id).concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+    }
     else {
-      alert(`${newName} is already added to the phonebook`)
+      // window(`${newName} is already added to the phonebook`)
+      setNewName('')
     }
   }
 
