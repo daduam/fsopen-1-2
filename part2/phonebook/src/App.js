@@ -13,7 +13,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filterString, setFilterString] = useState('')
   const [showAll, setShowAll] = useState(true)
-  const [successMessage, setSuccessMessage] = useState(null)
+  const [notificationMessage, setNotificationMessage] = useState(null)
+  const [notificationType, setNotificationType] = useState(null)
 
   const hook = () => {
     personService
@@ -52,11 +53,11 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
-          setSuccessMessage(
-            `Added ${newName}`
-          )
+          setNotificationMessage(`Added ${newName}`)
+          setNotificationType('success')
           setTimeout(() => {
-            setSuccessMessage(null)
+            setNotificationMessage(null)
+            setNotificationType(null)
           }, 5000)
         })
     }
@@ -69,12 +70,21 @@ const App = () => {
           setPersons(persons.filter(p => p.id !== id).concat(returnedPerson))
           setNewName('')
           setNewNumber('')
-          setSuccessMessage(
-            `Changed number for ${newName}`
-          )
+          setNotificationMessage(`Changed number for ${newName}`)
+          setNotificationType('success')
           setTimeout(() => {
-            setSuccessMessage(null)
+            setNotificationMessage(null)
+            setNotificationType(null)
           }, 5000)
+        })
+        .catch(error => {
+          setNotificationMessage(`Information of ${newName} has already been removed from server`)
+          setNotificationType('error')
+          setTimeout(() => {
+            setNotificationMessage(null)
+            setNotificationType(null)
+          }, 5000)
+          setPersons(persons.filter(p => p.id !== id))
         })
     }
     else {
@@ -110,7 +120,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={successMessage}  />
+      <Notification message={notificationMessage} type={notificationType}  />
       <Filter value={filterString} onChange={handleFilterInputChange} />
 
       <h2>Add a new</h2>

@@ -20,3 +20,12 @@ code {
   color: green;
   border-left: 5px solid green;
 }
+
+.error {
+  background: lightgrey;
+  padding: 10px;
+  margin: 0 10px 10px 10px;
+  font-size: 20px;
+  color: red;
+  border-left: 5px solid red;
+}
