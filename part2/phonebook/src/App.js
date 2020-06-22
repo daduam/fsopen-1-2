@@ -3,6 +3,9 @@ import Filter from './Components/Filter'
 import PersonForm from './Components/PersonForm'
 import Persons from './Components/Persons'
 import personService from './Services/personService'
+import Notification from './Components/Notification'
+
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -10,6 +13,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filterString, setFilterString] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   const hook = () => {
     personService
@@ -48,6 +52,12 @@ const App = () => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setSuccessMessage(
+            `Added ${newName}`
+          )
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
         })
     }
     else if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one`)) {
@@ -59,6 +69,12 @@ const App = () => {
           setPersons(persons.filter(p => p.id !== id).concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setSuccessMessage(
+            `Changed number for ${newName}`
+          )
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
         })
     }
     else {
@@ -94,6 +110,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={successMessage}  />
       <Filter value={filterString} onChange={handleFilterInputChange} />
 
       <h2>Add a new</h2>
