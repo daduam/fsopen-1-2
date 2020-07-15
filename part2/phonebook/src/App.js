@@ -60,10 +60,19 @@ const App = () => {
             setNotificationType(null)
           }, 5000)
         })
+        .catch(error => {
+          // console.log(error.response.data)
+          setNotificationMessage(error.response.data.error)
+          setNotificationType('error')
+          setTimeout(() => {
+            setNotificationMessage(null)
+            setNotificationType(null)
+          }, 5000)
+        })
     }
     else if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one`)) {
       const id = person.id
-      
+
       personService
         .update(id, { ...person, number: newNumber })
         .then(returnedPerson => {
@@ -120,7 +129,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notificationMessage} type={notificationType}  />
+      <Notification message={notificationMessage} type={notificationType} />
       <Filter value={filterString} onChange={handleFilterInputChange} />
 
       <h2>Add a new</h2>
